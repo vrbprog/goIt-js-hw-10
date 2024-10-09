@@ -18,10 +18,11 @@ if (formState !== null) {
 inputForm.addEventListener("input", event => {
     if (event.target.name === "email") {
         formData.email = event.target.value;
+        localStorage.setItem("feedback-form-state", JSON.stringify(formData));
     } else if (event.target.name === "message") {
         formData.message = event.target.value;
+        localStorage.setItem("feedback-form-state", JSON.stringify(formData));
     }
-    localStorage.setItem("feedback-form-state", JSON.stringify(formData));
 });
 
 const submit = document.querySelector(".feedback-form");
@@ -36,7 +37,9 @@ submit.addEventListener("submit", event => {
         submit.reset(); 
         formData.email = '';
         formData.message = '';
-        localStorage.removeItem("feedback-form-state");
+        inputForm.elements.email.value = '';
+        inputForm.elements.message.value = '';
+        localStorage.clear();
     }
 
 });
