@@ -76,11 +76,7 @@ body {
 }
 
 main {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  padding-top: 60px;
-  /* align-items: center;*/
+  margin: 120px auto;
 }
 
 .main-title-gradient {
@@ -92,87 +88,30 @@ main {
   background-clip: text;
 }
 
-ul {
-  list-style: none;
-  padding: 0;
-  margin: 0 auto;
+input#datetime-picker {
+  width: 180px;
 }
 
-.gallery {
-  width: 1152px;
-  background-color: white;
-  padding: 24px 156px;
+button[data-start] {
+  width: 78px;
+}
+
+.timer {
   display: flex;
-  grid-row-gap: 24px;
-  grid-column-gap: 24px;
-  flex-wrap: wrap;
-  border-radius: 8px;
-}
+  column-gap: 14px;
 
-.gallery-image {
-  width: 360px;
-  height: 200px;
-  display: block;
-}
-
-.feedback-form {
-  width: 408px;
-  height: 296px;
-  display: flex;
-  flex-direction: column;
-  padding: 24px;
-  background-color: white;
-  border-radius: 8px;
-  gap: 8px;
-
-  label {
+  div.field {
     display: flex;
     flex-direction: column;
-  }
+    align-items: center;
+    font-weight: 500;
 
-  label {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 24px;
-    letter-spacing: 0.04em;
-  }
+    .value {
+      font-size: 2em;
+    }
 
-  input {
-    height: 40px;
-    padding-left: 12px;
-    border: 1px solid #808080;
-    border-radius: 4px;
-  }
-
-  input:hover {
-    border: 1px solid black;
-  }
-
-  textarea {
-    padding-left: 12px;
-    border: 1px solid #808080;
-    border-radius: 4px;
-  }
-
-  textarea:hover {
-    border: 1px solid black;
-  }
-
-  button {
-    width: 95px;
-    height: 40px;
-    margin-top: 12px;
-    background: #4e75ff;
-    color: #fafafa;
-    border-radius: 8px;
-    border: none;
-    font-size: 16px;
-  }
-
-  button:hover {
-    background-color: #6c8cff;
+    .label {
+      text-transform: uppercase;
+    }
   }
 }
