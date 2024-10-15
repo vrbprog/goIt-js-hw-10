@@ -61,12 +61,12 @@ startButton.addEventListener('click', () => {
     updateTimerValues(timerWidget, counter);
     setTimeout(() => {
       if (counter > 0) {
-        const timeinterval = setInterval(() => {
+        const timeInterval = setInterval(() => {
           if ((counter - 1000) == 0) {
-            clearInterval(timeinterval);
-            iziToast.info({ position: "center", title: 'Finished', message: 'Event happened' });
+            clearInterval(timeInterval);
             updateTimerValues(timerWidget, 0);
             selectDate.disabled = false;
+            iziToast.info({ position: "center", title: 'Finished', message: 'Event happened' });
           } else {
             counter -= 1000;
             updateTimerValues(timerWidget, counter);
@@ -74,22 +74,23 @@ startButton.addEventListener('click', () => {
         }, 1000);
       } else {
         iziToast.info({ position: "center", title: 'Finished', message: 'Event happened' });
-        startButton.disabled = false;
+        selectDate.disabled = false;
       }
     }, delay);
   } else {
     iziToast.info({ position: "center", title: 'Finished', message: 'Event happened' });
-    startButton.disabled = false;
+    startButton.disabled = true;
   }
 });
 
 function updateTimerValues(timerWidget, counter)
 {
     const { days, hours, minutes, seconds } = timerWidget;
-    seconds.textContent = addLeadingZero(convertMs(counter).seconds);
-    minutes.textContent = addLeadingZero(convertMs(counter).minutes);
-    hours.textContent = addLeadingZero(convertMs(counter).hours);
-    days.textContent = addLeadingZero(convertMs(counter).days);
+    const remainingTime = convertMs(counter);
+    seconds.textContent = addLeadingZero(remainingTime.seconds);
+    minutes.textContent = addLeadingZero(remainingTime.minutes);
+    hours.textContent = addLeadingZero(remainingTime.hours);
+    days.textContent = addLeadingZero(remainingTime.days);
 }
 
 function convertMs(ms) {
