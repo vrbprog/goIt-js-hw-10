@@ -11,10 +11,9 @@ import "izitoast/dist/css/iziToast.min.css";
       position: 'topRight'
   });
 
-const createButton = document.querySelector("form button");
 const promiseForm = document.querySelector("form");
 
-createButton.addEventListener('click', (event) => {
+promiseForm.addEventListener('submit', (event) => {
   event.preventDefault();
   validateForm(promiseForm);
   promiseForm.reset();

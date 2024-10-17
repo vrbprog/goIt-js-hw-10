@@ -57,24 +57,20 @@ startButton.addEventListener('click', () => {
     const delay = counter % 1000;
     counter -= delay;
     updateTimerValues(timerWidget, counter);
-    setTimeout(() => {
       if (counter > 0) {
         const timeInterval = setInterval(() => {
-          if ((counter - 1000) == 0) {
+          counter -= 1000;
+          if (counter === 0) {
             clearInterval(timeInterval);
-            updateTimerValues(timerWidget, 0);
             selectDate.disabled = false;
             iziToast.success({ position: "center", title: 'Finished', message: 'Event happened' });
-          } else {
-            counter -= 1000;
-            updateTimerValues(timerWidget, counter);
-          }
+          } 
+          updateTimerValues(timerWidget, counter);
         }, 1000);
       } else {
         iziToast.info({ position: "center", title: 'Finished', message: 'Event happened' });
         selectDate.disabled = false;
       }
-    }, delay);
   } else {
     iziToast.info({ position: "center", title: 'Passed', message: 'The date has passed' });
     startButton.disabled = true;
