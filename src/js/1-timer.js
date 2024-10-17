@@ -38,10 +38,8 @@ function validateSelectDate(date) {
     startButton.disabled = true;
   }
   else {
-    //iziToast.info({ position: "center", title: 'Hello', message: 'iziToast.info()' });
     startButton.disabled = false;
   }
-  console.log(date);
 }
 
 const timerWidget = {};
@@ -66,7 +64,7 @@ startButton.addEventListener('click', () => {
             clearInterval(timeInterval);
             updateTimerValues(timerWidget, 0);
             selectDate.disabled = false;
-            iziToast.info({ position: "center", title: 'Finished', message: 'Event happened' });
+            iziToast.success({ position: "center", title: 'Finished', message: 'Event happened' });
           } else {
             counter -= 1000;
             updateTimerValues(timerWidget, counter);
@@ -78,7 +76,7 @@ startButton.addEventListener('click', () => {
       }
     }, delay);
   } else {
-    iziToast.info({ position: "center", title: 'Finished', message: 'Event happened' });
+    iziToast.info({ position: "center", title: 'Passed', message: 'The date has passed' });
     startButton.disabled = true;
   }
 });

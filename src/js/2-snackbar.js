@@ -1,45 +1,52 @@
 
-const formData = {
-    email: "",
-    message: ""
-}
+import iziToast from "izitoast";
+import "izitoast/dist/css/iziToast.min.css";
 
-const inputForm = document.querySelector("form");
-const formState = localStorage.getItem("feedback-form-state");
+  iziToast.settings({
+      timeout: 3000, // default timeout
+      resetOnHover: true,
+      // icon: 'fa fa-user', // icon class
+      transitionIn: 'bounceInDown',
+      transitionOut: 'flipOutX',
+      position: 'topRight'
+  });
 
-if (formState !== null) {
-    formData.email = JSON.parse(formState).email;
-    inputForm.elements.email.value = formData.email;
+const createButton = document.querySelector("form button");
+const promiseForm = document.querySelector("form");
 
-    formData.message = JSON.parse(formState).message;
-    inputForm.elements.message.value = formData.message;
-}
-
-inputForm.addEventListener("input", event => {
-    if (event.target.name === "email") {
-        formData.email = event.target.value;
-        localStorage.setItem("feedback-form-state", JSON.stringify(formData));
-    } else if (event.target.name === "message") {
-        formData.message = event.target.value;
-        localStorage.setItem("feedback-form-state", JSON.stringify(formData));
-    }
+createButton.addEventListener('click', (event) => {
+  event.preventDefault();
+  validateForm(promiseForm);
+  promiseForm.reset();
 });
 
-const submit = document.querySelector(".feedback-form");
-submit.addEventListener("submit", event => {
-    event.preventDefault();
-    
-    if (formData.email === '' || formData.message === '') {
-        alert("Fill please all fields");
-    }
-    else {
-        console.log(formData);
-        submit.reset(); 
-        formData.email = '';
-        formData.message = '';
-        inputForm.elements.email.value = '';
-        inputForm.elements.message.value = '';
-        localStorage.clear();
-    }
+function validateForm(promiseForm)
+{
+  const state = promiseForm.elements.state.value;
+  const delay = promiseForm.elements.delay.value;
+  if (delay === '' || state === '')
+  {
+    iziToast.error({ position: 'topCenter', title: 'Error', message: 'Input parameters of Promise' });
+  }
+  else {
+    const promise = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (state === 'fulfilled') {
+          resolve(delay);
+        } else {
+          reject(delay);
+        }
+      }, delay);
+    });
 
-});
+    promise.then((delay) => {
+      iziToast.success({ position: 'topRight', message: `✅ Fulfilled promise in ${delay} ms` });
+    })
+      .catch(delay => {
+        iziToast.error({ position: 'topRight', message: `❌ Rejected promise in ${delay} ms` });
+      });
+  }
+}
+
+
+
