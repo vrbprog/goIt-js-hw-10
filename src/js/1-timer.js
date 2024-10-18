@@ -50,37 +50,32 @@ timerWidget.seconds = document.querySelector(".value[data-seconds]");
 
 startButton.disabled = true;
 startButton.addEventListener('click', () => {
-  if (deadLine.getTime() > Date.now()) {
+  const startTime = Date.now();
+  if (deadLine.getTime() > startTime) {
     selectDate.disabled = true;
     startButton.disabled = true;
-    let counter = deadLine.getTime() - Date.now();
-    const delay = counter % 1000;
-    counter -= delay;
+    let counter = deadLine.getTime() - startTime;
     updateTimerValues(timerWidget, counter);
-      if (counter > 0) {
-        const timeInterval = setInterval(() => {
-          counter -= 1000;
-          if (counter === 0) {
-            clearInterval(timeInterval);
-            selectDate.disabled = false;
-            iziToast.success({ position: "center", title: 'Finished', message: 'Event happened' });
-          } 
-          updateTimerValues(timerWidget, counter);
-        }, 1000);
-      } else {
-        iziToast.info({ position: "center", title: 'Finished', message: 'Event happened' });
-        selectDate.disabled = false;
-      }
+      const timeInterval = setInterval(() => {
+        counter -= 1000;
+        if (counter <= 0) {
+          clearInterval(timeInterval);
+          selectDate.disabled = false;
+          iziToast.success({ position: "center", title: 'Finished', message: 'Event happened' });
+        } 
+        updateTimerValues(timerWidget, counter);
+      }, 1000);
   } else {
-    iziToast.info({ position: "center", title: 'Passed', message: 'The date has passed' });
+    iziToast.info({ position: "center", title: 'Passed', message: 'The event has passed' });
     startButton.disabled = true;
   }
 });
 
 function updateTimerValues(timerWidget, counter)
 {
-    const { days, hours, minutes, seconds } = timerWidget;
-    const remainingTime = convertMs(counter);
+  const { days, hours, minutes, seconds } = timerWidget;
+
+    const remainingTime = convertMs(counter > 0 ? counter : 0);
     seconds.textContent = addLeadingZero(remainingTime.seconds);
     minutes.textContent = addLeadingZero(remainingTime.minutes);
     hours.textContent = addLeadingZero(remainingTime.hours);
